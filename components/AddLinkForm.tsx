@@ -28,6 +28,8 @@ const AddLinkForm: React.FC<LinkTypes> = ({
   ): Promise<void> => {
     event.preventDefault();
     setError('');
+    setLinkId('');
+    setCustomLink('');
     setLoading(true);
     let url = input.current!.value;
 
