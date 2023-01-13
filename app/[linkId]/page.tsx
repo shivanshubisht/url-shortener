@@ -30,10 +30,7 @@ const Link: GenericType = async ({ params }) => {
     },
   });
   if (url) {
-    {
-      console.log(url.url);
-      return url ? <Redirect url={url.url} /> : null;
-    }
+    return url ? <Redirect url={url.url} /> : null;
     // Producing CORS error currently because of changed next/navigation in nextjs 13, redirect working as fetch first instead of server redirecting.
     // redirect(url.url);
   }

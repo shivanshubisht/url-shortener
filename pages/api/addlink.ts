@@ -9,12 +9,15 @@ export const config = {
   },
 };
 
+type Data = {
+  link: string | null;
+};
+
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<Data>
 ) {
   const { link, customName } = req.body;
-  console.log(link, customName);
   const existingLink = await prisma.link.findFirst({
     where: { url: link },
   });
@@ -42,7 +45,10 @@ export default async function handler(
     data: {
       url: link,
       linkId: id,
+      customname: customName,
     },
   });
-  return res.status(200).json({ link: addlink.linkId });
+  return addlink.customname
+    ? res.status(200).json({ link: addlink.customname })
+    : res.status(200).json({ link: addlink.linkId });
 }

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 type Link = {
   link: string;
@@ -8,12 +8,18 @@ type Link = {
 interface LinkTypes {
   setLinkId: (linkId: string) => void;
   setCustomLink: (customLink: string) => void;
+  setLoading: (loading: boolean) => void;
+  setError: (error: string) => void;
 }
 
-const AddLinkForm: React.FC<LinkTypes> = ({ setLinkId, setCustomLink }) => {
+const AddLinkForm: React.FC<LinkTypes> = ({
+  setLinkId,
+  setCustomLink,
+  setLoading,
+  setError,
+}) => {
   const input = useRef<HTMLInputElement>(null);
   const customName = useRef<HTMLInputElement>(null);
-  const [error, setError] = useState<string | null>(null);
   const urlPattern =
     /^(https?:\/\/)?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)$/;
 
@@ -21,6 +27,8 @@ const AddLinkForm: React.FC<LinkTypes> = ({ setLinkId, setCustomLink }) => {
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
+    setError('');
+    setLoading(true);
     let url = input.current!.value;
 
     if (!urlPattern.test(url)) {
@@ -44,19 +52,33 @@ const AddLinkForm: React.FC<LinkTypes> = ({ setLinkId, setCustomLink }) => {
         }),
       })
     ).json();
-
+    setLoading(false);
     setLinkId(data.link);
     setCustomLink(data.customName);
   };
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input type='text' placeholder='Enter long URL' ref={input} />
-        <input type='text' placeholder='Enter custom name' ref={customName} />
-        <button type='submit'>Shorten</button>
+      <form onSubmit={handleSubmit} className='grid gap-2 max-w-xs'>
+        <input
+          type='text'
+          placeholder='Enter your URL'
+          ref={input}
+          className='bg-black p-2 rounded outline-none border-black border-2 focus:border-white transition duration-300 ease-in-out'
+        />
+        <input
+          type='text'
+          placeholder='Enter custom name'
+          ref={customName}
+          className='bg-black p-2 rounded outline-none border-black border-2 focus:border-white transition duration-300 ease-in-out'
+        />
+        <button
+          type='submit'
+          className='bg-white text-black p-2 rounded hover:bg-black hover:text-white border-white border-2 transition duration-300 ease-in-out'
+        >
+          Shorten
+        </button>
       </form>
-      {error ? <div>{error}</div> : null}
     </>
   );
 };
