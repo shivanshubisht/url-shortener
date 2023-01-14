@@ -61,7 +61,7 @@ const AddLinkForm: React.FC<LinkTypes> = ({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className='grid gap-2 max-w-xs'>
+      <form onSubmit={handleSubmit} className='grid gap-2 w-full max-w-xs'>
         <input
           type='text'
           placeholder='Enter your URL'
