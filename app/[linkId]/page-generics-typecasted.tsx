@@ -28,7 +28,6 @@ const Link = asyncComponent<ParamsType, JSX.Element>(async ({ params }) => {
   });
   if (url) {
     {
-      console.log(url.url);
       return url ? <Redirect url={url.url} /> : null;
     }
     // redirect(url.url);

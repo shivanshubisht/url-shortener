@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AddLinkForm from '../components/AddLinkForm';
 import Link from 'next/link';
 import { Inter } from '@next/font/google';
+import { useEffect } from 'react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -14,7 +15,14 @@ export default function Home() {
   const [customLink, setCustomLink] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const url = window.location.href;
+  const [url, setUrl] = useState<string>('');
+
+  // unable to use window.location.href directly because of SSR
+  useEffect(() => {
+    const url = window.location.href;
+    setUrl(url);
+  }, [url]);
+
   return (
     <main
       className={`flex flex-col h-screen items-center justify-center gap-4 ${inter.className}`}
@@ -27,7 +35,7 @@ export default function Home() {
         setError={setError}
       />
       {/* added height to prevent layout shift */}
-      <div className='h-1'>
+      <div className='h-1 max-w-md'>
         {error && <div className='text-red-500'>{error}</div>}
         {!error && loading && <div className='text-green-500'>Loading...</div>}
         {!error && linkId && (

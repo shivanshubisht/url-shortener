@@ -56,6 +56,7 @@ const AddLinkForm: React.FC<LinkTypes> = ({
     ).json();
     setLoading(false);
     setLinkId(data.link);
+    setError(data.error);
     setCustomLink(data.customName);
   };
 

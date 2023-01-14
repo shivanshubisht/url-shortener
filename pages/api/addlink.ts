@@ -10,7 +10,8 @@ export const config = {
 };
 
 type Data = {
-  link: string | null;
+  link?: string | null;
+  error?: string | null;
 };
 
 export default async function handler(
@@ -18,6 +19,18 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { link, customName } = req.body;
+  // if custom name is already taken
+  const existingCustomLink = await prisma.link.findFirst({
+    where: { customname: customName },
+  });
+
+  if (existingCustomLink) {
+    //@ts-ignore
+    return res.status(400).json({
+      error: `Custom name already exists for another URL ${existingCustomLink.url}. Either change your custom name or change the custom name for the existing custom URL.`,
+    });
+  }
+
   const existingLink = await prisma.link.findFirst({
     where: { url: link },
   });
@@ -29,6 +42,7 @@ export default async function handler(
     if (existingCustomName) {
       return res.status(200).json({ link: existingLink.customname });
     }
+
     if (customName) {
       const updateLink = await prisma.link.update({
         where: { id: existingLink.id },
