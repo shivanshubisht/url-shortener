@@ -14,7 +14,7 @@ export default function Home() {
   const [customLink, setCustomLink] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
+  const url = window.location.href;
   return (
     <main
       className={`flex flex-col h-screen items-center justify-center gap-4 ${inter.className}`}
@@ -32,12 +32,12 @@ export default function Home() {
         {!error && loading && <div className='text-green-500'>Loading...</div>}
         {!error && linkId && (
           <Link href={`/${linkId}`} className='text-blue-500'>
-            {`https://url-shortener.shivanshu.in/${linkId}`}
+            {`${url}${linkId}`}
           </Link>
         )}
         {!error && customLink && (
           <Link href={`/${customLink}`} className='text-blue-500'>
-            {`https://url-shortener.shivanshu.in/${customLink}`}
+            {`${url}${customLink}`}
           </Link>
         )}
       </div>
