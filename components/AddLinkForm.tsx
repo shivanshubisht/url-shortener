@@ -61,28 +61,26 @@ const AddLinkForm: React.FC<LinkTypes> = ({
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className='grid gap-2 w-full max-w-xs'>
-        <input
-          type='text'
-          placeholder='Enter your URL'
-          ref={input}
-          className='bg-black p-2 rounded outline-none border-black border-2 focus:border-white transition duration-300 ease-in-out'
-        />
-        <input
-          type='text'
-          placeholder='Enter custom name'
-          ref={customName}
-          className='bg-black p-2 rounded outline-none border-black border-2 focus:border-white transition duration-300 ease-in-out'
-        />
-        <button
-          type='submit'
-          className='bg-white text-black p-2 rounded hover:bg-black hover:text-white border-white border-2 transition duration-300 ease-in-out'
-        >
-          Shorten
-        </button>
-      </form>
-    </>
+    <form onSubmit={handleSubmit} className='grid gap-2 w-full max-w-xs'>
+      <input
+        type='text'
+        placeholder='Enter your URL'
+        ref={input}
+        className='bg-black p-2 rounded outline-none border-black border-2 focus:border-white transition duration-300 ease-in-out'
+      />
+      <input
+        type='text'
+        placeholder='Enter custom name'
+        ref={customName}
+        className='bg-black p-2 rounded outline-none border-black border-2 focus:border-white transition duration-300 ease-in-out'
+      />
+      <button
+        type='submit'
+        className='bg-white text-black p-2 rounded hover:bg-black hover:text-white border-white border-2 transition duration-300 ease-in-out'
+      >
+        Shorten
+      </button>
+    </form>
   );
 };
 

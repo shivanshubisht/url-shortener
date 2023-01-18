@@ -24,10 +24,11 @@ export default async function handler(
     where: { customname: customName },
   });
 
-  if (existingCustomLink) {
-    //@ts-ignore
+  if (existingCustomLink!.url !== link) {
     return res.status(400).json({
-      error: `Custom name already exists for another URL ${existingCustomLink.url}. Either change your custom name or change the custom name for the existing custom URL.`,
+      error: `Custom name already exists for another URL ${
+        existingCustomLink!.url
+      }. Either change your custom name or change the custom name for the existing custom URL.`,
     });
   }
 

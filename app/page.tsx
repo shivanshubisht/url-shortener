@@ -25,7 +25,7 @@ export default function Home() {
 
   return (
     <main
-      className={`flex flex-col h-screen items-center justify-center gap-4 ${inter.className}`}
+      className={`flex flex-col h-screen items-center justify-center gap-4 bg-gradient-to-b from-[#191919] to-[#15162c] ${inter.className}`}
     >
       <h1 className='text-4xl font-semibold'>Shortened Url</h1>
       <AddLinkForm
