@@ -19,7 +19,6 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   const { link, customName } = req.body;
-  // if custom name is already taken
   const existingCustomLink = await prisma.link.findFirst({
     where: { customname: customName },
   });
