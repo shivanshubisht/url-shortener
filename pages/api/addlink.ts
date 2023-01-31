@@ -23,11 +23,9 @@ export default async function handler(
     where: { customname: customName },
   });
 
-  if (existingCustomLink!.url !== link) {
-    return res.status(400).json({
-      error: `Custom name already exists for another URL ${
-        existingCustomLink!.url
-      }. Either change your custom name or change the custom name for the existing custom URL.`,
+  if (existingCustomLink && existingCustomLink.url !== link) {
+    return res.status(200).json({
+      error: `Custom name already exists for another URL ${existingCustomLink.url}. Either change your custom name or change the custom name for the existing custom URL.`,
     });
   }
 
@@ -44,25 +42,25 @@ export default async function handler(
     }
 
     if (customName) {
-      const updateLink = await prisma.link.update({
+      const updatedLink = await prisma.link.update({
         where: { id: existingLink.id },
         data: { customname: customName },
       });
-      return res.status(200).json({ link: updateLink.customname });
+      return res.status(200).json({ link: updatedLink.customname });
     }
 
     return res.status(200).json({ link: existingLink.linkId });
   }
 
   const id = Math.random().toString(36).substring(2, 8);
-  const addlink = await prisma.link.create({
+  const newLink = await prisma.link.create({
     data: {
       url: link,
       linkId: id,
       customname: customName,
     },
   });
-  return addlink.customname
-    ? res.status(200).json({ link: addlink.customname })
-    : res.status(200).json({ link: addlink.linkId });
+  return newLink.customname
+    ? res.status(200).json({ link: newLink.customname })
+    : res.status(200).json({ link: newLink.linkId });
 }
