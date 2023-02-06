@@ -12,6 +12,7 @@ export const config = {
 type Data = {
   link?: string | null;
   error?: string | null;
+  customName?: string | null;
 };
 
 export default async function handler(
@@ -38,7 +39,7 @@ export default async function handler(
       where: { customname: customName },
     });
     if (existingCustomName) {
-      return res.status(200).json({ link: existingLink.customname });
+      return res.status(200).json({ customName: existingLink.customname });
     }
 
     if (customName) {
@@ -46,7 +47,7 @@ export default async function handler(
         where: { id: existingLink.id },
         data: { customname: customName },
       });
-      return res.status(200).json({ link: updatedLink.customname });
+      return res.status(200).json({ customName: updatedLink.customname });
     }
 
     return res.status(200).json({ link: existingLink.linkId });
@@ -61,6 +62,6 @@ export default async function handler(
     },
   });
   return newLink.customname
-    ? res.status(200).json({ link: newLink.customname })
+    ? res.status(200).json({ customName: newLink.customname })
     : res.status(200).json({ link: newLink.linkId });
 }
