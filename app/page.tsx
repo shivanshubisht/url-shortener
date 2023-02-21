@@ -3,7 +3,6 @@ import { useState } from 'react';
 import AddLinkForm from '../components/AddLinkForm';
 import Link from 'next/link';
 import { Inter } from '@next/font/google';
-import { useEffect } from 'react';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -15,13 +14,17 @@ export default function Home() {
   const [customLink, setCustomLink] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [url, setUrl] = useState<string>('');
 
-  // unable to use window.location.href directly because of SSR
-  useEffect(() => {
-    const url = window.location.href;
-    setUrl(url);
-  }, [url]);
+  // // unable to use window.location.href directly because of SSR
+  // useEffect(() => {
+  //   const getBaseUrl = window.location.href;
+  //   setUrl(getBaseUrl);
+  // }, [getBaseUrl]);
+
+  const getBaseUrl = () => {
+    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+    return `http://localhost:${process.env.PORT ?? 3000}/`;
+  };
 
   return (
     <main
@@ -40,12 +43,12 @@ export default function Home() {
         {!error && loading && <div className='text-green-500'>Loading...</div>}
         {!error && linkId && (
           <Link href={`/${linkId}`} className='text-blue-500'>
-            {`${url}${linkId}`}
+            {`${getBaseUrl()}${linkId}`}
           </Link>
         )}
         {!error && customLink && (
           <Link href={`/${customLink}`} className='text-blue-500'>
-            {`${url}${customLink}`}
+            {`${getBaseUrl()}${customLink}`}
           </Link>
         )}
       </div>
