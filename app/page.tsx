@@ -18,8 +18,6 @@ export default function Home() {
   const getBaseUrl = () => {
     if (process.env.NEXT_PUBLIC_URL)
       return `https://${process.env.NEXT_PUBLIC_URL}/`;
-    else if (process.env.VERCEL_URL)
-      return `https://${process.env.VERCEL_URL}/`;
     else if (process.env.NEXT_PUBLIC_VERCEL_URL)
       return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`;
     else return `http://localhost:${process.env.PORT ?? 3000}/`;
