@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import Redirect from '../../components/Redirect';
 import { prisma } from '../../server/db/client';
 
 interface ParamsType {
@@ -27,10 +26,7 @@ const Link = asyncComponent<ParamsType, JSX.Element>(async ({ params }) => {
     },
   });
   if (url) {
-    {
-      return url ? <Redirect url={url.url} /> : null;
-    }
-    // redirect(url.url);
+    redirect(url.url);
   }
   return <div>URL not found</div>;
 });

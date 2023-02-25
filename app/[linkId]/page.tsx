@@ -1,5 +1,4 @@
 import { redirect } from 'next/navigation';
-import Redirect from '../../components/Redirect';
 import { prisma } from '../../server/db/client';
 
 interface ParamsType {
@@ -30,9 +29,7 @@ const Link: GenericType = async ({ params }) => {
     },
   });
   if (url) {
-    return url ? <Redirect url={url.url} /> : null;
-    // Producing CORS error currently because of changed next/navigation in nextjs 13, redirect working as fetch first instead of server redirecting.
-    // redirect(url.url);
+    redirect(url.url);
   }
   return <div>URL not found</div>;
 };

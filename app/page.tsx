@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import AddLinkForm from '../components/AddLinkForm';
 import Link from 'next/link';
-import { Inter } from '@next/font/google';
+import { Inter } from 'next/font/google';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -22,7 +22,8 @@ export default function Home() {
   // }, [getBaseUrl]);
 
   const getBaseUrl = () => {
-    if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+    if (process.env.NEXT_PUBLIC_VERCEL_URL)
+      return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`;
     return `http://localhost:${process.env.PORT ?? 3000}/`;
   };
 
