@@ -15,16 +15,14 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // // unable to use window.location.href directly because of SSR
-  // useEffect(() => {
-  //   const getBaseUrl = window.location.href;
-  //   setUrl(getBaseUrl);
-  // }, [getBaseUrl]);
-
   const getBaseUrl = () => {
-    if (process.env.NEXT_PUBLIC_VERCEL_URL)
+    if (process.env.NEXT_PUBLIC_URL)
+      return `https://${process.env.NEXT_PUBLIC_URL}/`;
+    else if (process.env.VERCEL_URL)
+      return `https://${process.env.VERCEL_URL}/`;
+    else if (process.env.NEXT_PUBLIC_VERCEL_URL)
       return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/`;
-    return `http://localhost:${process.env.PORT ?? 3000}/`;
+    else return `http://localhost:${process.env.PORT ?? 3000}/`;
   };
 
   return (
